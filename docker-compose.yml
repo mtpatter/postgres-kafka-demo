@@ -57,7 +57,7 @@ services:
       KSQL_KSQL_SERVICE_ID: ksql-server
 
   connect:
-    image: debezium-connect  # built from debezium/connect:0.10 
+    image: mtpatter/debezium-connect  # built from debezium/connect:0.10 
     depends_on:
       - zookeeper
       - kafka

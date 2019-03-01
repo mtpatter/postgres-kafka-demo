@@ -26,10 +26,11 @@ source and sink data back and forth through Kafka
 * Postgres, pulled from debezium, tailored for use with Connect
 
 Most of the containers are pulled directly from official Docker Hub images.
-The debezium connect image used needs some additional packages, so it needs to
-be built from the included Dockerfile.
+The debezium connect image used here needs some additional packages, so I've
+built a [debezium connect image](https://cloud.docker.com/repository/docker/mtpatter/debezium-connect) that I've made available on DockerHub.
+It can also be built from the included Dockerfile.
 
-### Build the connect image
+### Build the connect image (optional)
 
 ```
 docker build -t debezium-connect -f debezium.Dockerfile .

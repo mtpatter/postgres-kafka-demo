@@ -1,0 +1,75 @@
+---
+version: '2'
+services:
+
+  postgres:
+    image: debezium/postgres:11
+    environment:
+      POSTGRES_PASSWORD: postgres
+    command: postgres -c config_file=/home/config/postgresql.conf
+    ports:
+      - 5432:5432
+    volumes:
+      - $PWD:/home/config
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:5.1.2
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:5.1.2
+    depends_on:
+      - zookeeper
+    ports:
+      - 9092:9092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  schema-registry:
+    image: confluentinc/cp-schema-registry:5.1.2
+    hostname: schema-registry
+    ports:
+      - 8081:8081
+    depends_on:
+      - zookeeper
+      - kafka
+    environment:
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka:9092
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper:2181
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+
+  ksql-server:
+    image: confluentinc/cp-ksql-server:5.1.2
+    depends_on:
+      - kafka
+      - schema-registry
+    environment:
+      KSQL_BOOTSTRAP_SERVERS: kafka:9092
+      KSQL_LISTENERS: http://0.0.0.0:8088
+      KSQL_KSQL_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      KSQL_KSQL_SERVICE_ID: ksql-server
+
+  connect:
+    image: debezium-connect  # built from debezium/connect:0.10 
+    depends_on:
+      - zookeeper
+      - kafka
+      - postgres
+    ports:
+      - 8083:8083
+    environment:
+        GROUP_ID: 1
+        CONFIG_STORAGE_TOPIC: my-connect-configs
+        OFFSET_STORAGE_TOPIC: my-connect-offsets
+        ADVERTISED_HOST_NAME: connect
+        BOOTSTRAP_SERVERS: kafka:9092
+        CONNECT_INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+        CONNECT_INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+

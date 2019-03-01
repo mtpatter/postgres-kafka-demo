@@ -1,4 +1,6 @@
 # postgres-kafka-demo
+[![Docker Automated buil](https://img.shields.io/docker/automated/mtpatter/postgres-kafka-demo.svg)](https://hub.docker.com/r/mtpatter/postgres-kafka-demo/)
+
 Fully reproducible step-by-step demo on how to stream tables from Postgres
 to Kafka/KSQL back to Postgres.
 

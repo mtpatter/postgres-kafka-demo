@@ -1,5 +1,4 @@
 # postgres-kafka-demo
-[![Docker Automated buil](https://img.shields.io/docker/automated/mtpatter/debezium-connect.svg)](https://cloud.docker.com/u/mtpatter/repository/docker/mtpatter/debezium-connect)
 
 Fully reproducible step-by-step demo on how to stream tables from Postgres
 to Kafka/KSQL back to Postgres.

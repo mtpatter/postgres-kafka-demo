@@ -1,7 +1,13 @@
 # postgres-kafka-demo
 
+![img](assets/data-stream.jpg)
+
 Fully reproducible step-by-step demo on how to stream tables from Postgres
 to Kafka/KSQL back to Postgres.
+
+I walk through this tutorial and others here on GitHub and on my [Medium blog](https://maria-patterson.medium.com/).  Here is a friend link for open access to the article: [*Data Stream Processing for Newbies with Kafka, KSQL, and Postgres*](https://medium.com/high-alpha/data-stream-processing-for-newbies-with-kafka-ksql-and-postgres-c30309cfaaf8?sk=3da652f7ab08ef3a138241569857e110).  I'll always add friend links on my GitHub tutorials for free Medium access if you don't have a paid Medium membership [(referral link)](https://maria-patterson.medium.com/membership).  
+
+If you find any of this useful, I always appreciate contributions to my Saturday morning [fancy coffee fund](https://github.com/sponsors/mtpatter)!
 
 All components are containerized so that the only things you need to run
 through this demo are Docker and docker-compose.

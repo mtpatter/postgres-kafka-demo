@@ -1,5 +1,4 @@
 FROM debezium/connect:0.10
-LABEL maintainer "maria.t.patterson@gmail.com"
 
 # https://github.com/debezium/debezium-examples/blob/master/unwrap-smt/debezium-jdbc-es/Dockerfile
 
